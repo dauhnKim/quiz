@@ -1,0 +1,21 @@
+import { Link } from "react-router-dom";
+
+import { useSetAtom } from "jotai";
+import { isTimeRunningAtom } from "../utils/store";
+
+import { PrimaryButton } from "../components/Button/Primary";
+
+const StartQuiz = () => {
+  const setIsTimeRunning = useSetAtom(isTimeRunningAtom);
+  return (
+    <div className="flex items-center justify-center flex-col">
+      <h1 className="text-6xl">Quiz</h1>
+      <p className="py-10 text-[#737373] text-center">You will be presented with 10 questions. Follow the instructions on each page. Your results will be calculated at the end.</p>
+      <Link to="/main-quiz">
+        <PrimaryButton text="Start" onClick={() => setIsTimeRunning(true)} />
+      </Link>
+    </div>
+  );
+};
+
+export default StartQuiz;

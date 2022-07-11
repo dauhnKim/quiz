@@ -8,7 +8,6 @@ const ThemeToggle = () => {
   const [theme, setTheme] = useAtom(isDarkAtom);
   const [isDark, setIsDark] = useState<boolean>(theme === "dark" ? true : false);
 
-  console.log("theme :>> ", theme);
   const darkModeHandler = () => {
     setIsDark(!isDark);
     theme === `light` ? setTheme(`dark`) : setTheme(`light`);
