@@ -12,7 +12,7 @@ const StartQuiz = () => {
       <h1 className="text-6xl">Quiz</h1>
       <p className="py-10 text-[#737373] text-center">You will be presented with 10 questions. Follow the instructions on each page. Your results will be calculated at the end.</p>
       <Link to="/main-quiz">
-        <PrimaryButton text="Start" onClick={() => setIsTimeRunning(true)} />
+        <PrimaryButton text="Start" onClick={() => setIsTimeRunning(true)} type="button" />
       </Link>
     </div>
   );

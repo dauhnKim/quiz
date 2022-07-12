@@ -1,15 +1,16 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, ButtonTypeMap, ExtendButtonBase } from "@mui/material";
 
 interface PrimaryProps {
   text: string;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  className?: string;
+  type?: "submit" | "button" | undefined;
+  onClick: () => void;
 }
 
-const Primary: React.FC<PrimaryProps> = ({ text, onClick }) => {
+const Primary: React.FC<PrimaryProps> = ({ text, className, type, onClick }) => {
   return (
     <Button
-      onClick={onClick}
       variant="outlined"
       size="large"
       sx={{
@@ -22,6 +23,9 @@ const Primary: React.FC<PrimaryProps> = ({ text, onClick }) => {
           backgroundColor: "rgba(0, 200, 150, 0.1)",
         },
       }}
+      onClick={onClick}
+      type={type}
+      className={className}
     >
       {text}
     </Button>
