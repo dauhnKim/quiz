@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { useAtom } from "jotai";
-import { isTimeRunningAtom } from "../utils/store";
+import { useAtomValue, useSetAtom } from "jotai";
+import { isTimeRunningAtom, userAnswersAtom } from "../utils/store";
 
 const StopWatch = () => {
   const [time, setTime] = useState(0);
-  const [isRunning, setIsRunning] = useAtom(isTimeRunningAtom);
+  const isRunning = useAtomValue(isTimeRunningAtom);
+  const setUserAnswers = useSetAtom(userAnswersAtom);
 
   useEffect(() => {
     let interval: string | number | NodeJS.Timer | undefined;
@@ -15,22 +16,20 @@ const StopWatch = () => {
       }, 10);
     } else if (!isRunning) {
       clearInterval(interval);
+
+      const totalTime = `${("0" + Math.floor((time / 60000) % 60)).slice(-2)}:${("0" + Math.floor((time / 1000) % 60)).slice(-2)}`;
+      setUserAnswers((prev) => ({ ...prev, totalTime }));
     }
-    return () => clearInterval(interval);
-  }, [isRunning]);
+
+    return () => {
+      clearInterval(interval);
+    };
+  });
 
   return (
-    <div className="stopwatch">
-      <div>
-        <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span>
-        <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</span>
-        {/* <span>{("0" + ((time / 10) % 100)).slice(-2)}</span> */}
-      </div>
-      {/* <div>
-        <button onClick={() => setIsRunning(true)}>Start</button>
-        <button onClick={() => setIsRunning(false)}>Stop</button>
-        <button onClick={() => setTime(0)}>Reset</button>
-      </div> */}
+    <div>
+      <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span>
+      <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</span>
     </div>
   );
 };

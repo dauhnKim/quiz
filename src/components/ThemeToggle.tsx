@@ -2,10 +2,10 @@ import { useState } from "react";
 import { LightDarkToggle } from "react-light-dark-toggle";
 
 import { useAtom } from "jotai";
-import { isDarkAtom } from "../utils/store";
+import { themeAtom } from "../utils/store";
 
 const ThemeToggle = () => {
-  const [theme, setTheme] = useAtom(isDarkAtom);
+  const [theme, setTheme] = useAtom(themeAtom);
   const [isDark, setIsDark] = useState<boolean>(theme === "dark" ? true : false);
 
   const darkModeHandler = () => {
