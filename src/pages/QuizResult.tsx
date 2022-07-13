@@ -13,11 +13,7 @@ const QuizResult = () => {
   const navigate = useNavigate();
   const [data, setData] = useState<Array<ChartType>>([]);
 
-  const quizzes = useAtomValue(quizzesAtom);
   const userAnswers = useAtomValue(userAnswersAtom);
-
-  // console.log("userAnswers :>> ", userAnswers);
-  // console.log("quizzes :>> ", quizzes);
 
   useEffect(() => {
     let tempChartData = [
@@ -30,7 +26,16 @@ const QuizResult = () => {
     });
 
     setData(tempChartData);
+
+    window.addEventListener("popstate", () => navigate("/"));
+    return () => {
+      window.removeEventListener("popstate", () => {});
+    };
   }, []);
+
+  useEffect(() => {
+    window.history.pushState(null, "", document.URL);
+  });
 
   return (
     <div className="w-full h-full flex items-center justify-center flex-col">
@@ -51,7 +56,10 @@ const QuizResult = () => {
         ))}
       </section>
 
-      <PrimaryButton text={"Try Again"} onClick={() => navigate("/")} />
+      <section className="grid grid-cols-2 gap-x-8">
+        <PrimaryButton text={"Try Again"} onClick={() => navigate("/main-quiz")} />
+        <PrimaryButton text={"Try New One"} onClick={() => navigate("/")} />
+      </section>
     </div>
   );
 };

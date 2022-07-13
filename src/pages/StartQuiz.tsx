@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
 
 import { useSetAtom } from "jotai";
-import { isTimeRunningAtom, quizzesAtom } from "../utils/store";
+import { answersAtom, isTimeRunningAtom, quizzesAtom } from "../utils/store";
 
 import { PrimaryButton } from "../components/Button/Primary";
 
 const StartQuiz = () => {
   const setIsTimeRunning = useSetAtom(isTimeRunningAtom);
   const setQuizzes = useSetAtom(quizzesAtom);
+  const setAnswers = useSetAtom(answersAtom);
 
   const onStartClick = () => {
-    setIsTimeRunning(true);
+    setIsTimeRunning(false);
     setQuizzes([]);
+    setAnswers([]);
   };
 
   return (

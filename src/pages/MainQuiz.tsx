@@ -1,3 +1,4 @@
+import { TailSpin } from "react-loader-spinner";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 
@@ -9,44 +10,33 @@ import useDidMountEffect from "../hooks/useDidMountEffect";
 
 import { cls } from "../utils/libs";
 import { AnswerType } from "../utils/metrics";
-import { isTimeRunningAtom, quizzesAtom, themeAtom, userAnswersAtom } from "../utils/store";
+import { answersAtom, isTimeRunningAtom, quizzesAtom, themeAtom, userAnswersAtom } from "../utils/store";
 
 import { PrimaryButton } from "../components/Button/Primary";
-import { TailSpin } from "react-loader-spinner";
 
 const MainQuiz = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentQuiz, setCurrentQuiz] = useState<number>(0);
-
-  const [answers, setAnswers] = useState<Array<AnswerType>>([]);
 
   const [value, setValue] = useState<string>("");
   const [helperText, setHelperText] = useState<string>("");
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const theme = useAtomValue<string>(themeAtom);
   const setIsRunning = useSetAtom(isTimeRunningAtom);
   const [quizzes, setQuizzes] = useAtom(quizzesAtom);
+  const [answers, setAnswers] = useAtom(answersAtom);
   const [userAnswers, setUserAnswers] = useAtom(userAnswersAtom);
 
   const isCorrect = value === quizzes[currentQuiz]?.correct_answer || false;
 
   useEffect(() => {
-    // When the page is refreshed, redirect to '/'
-    const entries = performance.getEntriesByType("navigation");
-    const type = entries.map((nav: any) => nav.type);
-
-    return () => {
-      if (type[0] === "reload") {
-        window.location.href = "/";
-      }
-    };
-  }, []);
-
-  useDidMountEffect(() => {
+    setIsRunning(true);
     getQuiz();
   }, []);
+
+  console.log("answers :>> ", answers);
+  console.log("quizzes :>> ", quizzes);
 
   useEffect(() => {
     if (value === "") {
@@ -62,9 +52,10 @@ const MainQuiz = () => {
   }, [isCorrect, value]);
 
   const getQuiz = async () => {
-    console.count();
     try {
       setIsLoading(true);
+      if (quizzes.length > 0) return;
+
       const { data } = await axios.get("https://opentdb.com/api.php?amount=3&category=27&type=multiple");
 
       // Shuffle answers
@@ -81,6 +72,7 @@ const MainQuiz = () => {
           return arr;
         });
       }
+
       setAnswers(tempAnswers);
 
       // Create an answer array for answers from user

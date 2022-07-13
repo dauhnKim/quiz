@@ -19,12 +19,14 @@ const StopWatch = () => {
 
       const totalTime = `${("0" + Math.floor((time / 60000) % 60)).slice(-2)}:${("0" + Math.floor((time / 1000) % 60)).slice(-2)}`;
       setUserAnswers((prev) => ({ ...prev, totalTime }));
+
+      setTime(0);
     }
 
     return () => {
       clearInterval(interval);
     };
-  });
+  }, []);
 
   return isRunning ? (
     <div>

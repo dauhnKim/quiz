@@ -28,8 +28,9 @@ const PieChart: React.FC<Props> = ({ data, total }) => {
           </Pie>
         </Chart>
       </ResponsiveContainer>
-      <div className="absolute top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] font-bold">
+      <div className="absolute top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] font-bold text-center">
         {data[0].value} <span className="font-extralight"> / {total}</span>
+        <p className="text-xl">{((+data[0].value / total) * 100).toFixed()} %</p>
       </div>
     </div>
   );
