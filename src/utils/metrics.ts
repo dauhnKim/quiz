@@ -21,7 +21,10 @@ export interface UserAnswerInfoType {
   totalTime: string;
   answerInfo: Array<UserAnswerType>;
 }
-
+export interface ChartType {
+  name: string;
+  value: number;
+}
 // Button Type
 export interface PrimaryProps {
   text: string;

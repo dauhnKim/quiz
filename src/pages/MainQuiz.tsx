@@ -12,6 +12,7 @@ import { AnswerType } from "../utils/metrics";
 import { isTimeRunningAtom, quizzesAtom, themeAtom, userAnswersAtom } from "../utils/store";
 
 import { PrimaryButton } from "../components/Button/Primary";
+import { TailSpin } from "react-loader-spinner";
 
 const MainQuiz = () => {
   const navigate = useNavigate();
@@ -127,8 +128,10 @@ const MainQuiz = () => {
   };
 
   return (
-    <div className="px-10">
-      {!isLoading && (
+    <div className="flex justify-center">
+      {isLoading ? (
+        <TailSpin height={25} width={25} color={theme === "dark" ? "#f0f0f0" : "#000"} />
+      ) : (
         <form>
           {/* Question */}
           <div className="text-2xl">
