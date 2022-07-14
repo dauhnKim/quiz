@@ -4,14 +4,12 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
-
-import useDidMountEffect from "../hooks/useDidMountEffect";
 
 import { cls } from "../utils/libs";
 import { AnswerType } from "../utils/metrics";
 import { answersAtom, isTimeRunningAtom, quizzesAtom, themeAtom, userAnswersAtom } from "../utils/store";
 
+import QuizSet from "../components/QuizSet";
 import { PrimaryButton } from "../components/Button/Primary";
 
 const MainQuiz = () => {
@@ -29,14 +27,9 @@ const MainQuiz = () => {
   const [userAnswers, setUserAnswers] = useAtom(userAnswersAtom);
 
   const isCorrect = value === quizzes[currentQuiz]?.correct_answer || false;
-
   useEffect(() => {
-    setIsRunning(true);
     getQuiz();
   }, []);
-
-  console.log("answers :>> ", answers);
-  console.log("quizzes :>> ", quizzes);
 
   useEffect(() => {
     if (value === "") {
@@ -54,9 +47,10 @@ const MainQuiz = () => {
   const getQuiz = async () => {
     try {
       setIsLoading(true);
+
       if (quizzes.length > 0) return;
 
-      const { data } = await axios.get("https://opentdb.com/api.php?amount=3&category=27&type=multiple");
+      const { data } = await axios.get("https://opentdb.com/api.php?amount=5&category=27&type=multiple");
 
       // Shuffle answers
       let tempAnswers: Array<AnswerType> = [];
@@ -84,6 +78,7 @@ const MainQuiz = () => {
       console.log("error : ", error);
     } finally {
       setIsLoading(false);
+      setIsRunning(true);
     }
   };
 
@@ -112,31 +107,13 @@ const MainQuiz = () => {
     }
   };
 
-  const radioStyle = {
-    color: theme === "dark" ? "rgb(229 231 235)" : "black",
-    "&.Mui-checked": {
-      color: theme === "dark" && isCorrect ? "#00c896" : isCorrect ? "#00a37a" : "#E85B2A",
-    },
-  };
-
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center items-center h-screen">
       {isLoading ? (
         <TailSpin height={25} width={25} color={theme === "dark" ? "#f0f0f0" : "#000"} />
       ) : (
         <form>
-          {/* Question */}
-          <div className="text-2xl">
-            <h1 className="inline mr-3">Q {currentQuiz + 1}.</h1>
-            <div className="inline" dangerouslySetInnerHTML={{ __html: quizzes[currentQuiz].question }}></div>
-          </div>
-
-          {/* Answers */}
-          <RadioGroup className="py-10" name="quiz" value={value} onChange={onRadioChange}>
-            {answers[currentQuiz].answer.map((value) => {
-              return <FormControlLabel key={value} value={value} control={<Radio sx={radioStyle} />} label={value} />;
-            })}
-          </RadioGroup>
+          <QuizSet val={value} onChange={onRadioChange} currentQuiz={currentQuiz} quizzes={quizzes} answers={answers[currentQuiz].answer} />
 
           <div className="w-full flex justify-between items-center">
             <div className={cls(theme === "dark" && isCorrect ? "text-[#00c896]" : isCorrect ? "text-[#00a37a]" : "text-[#E85B2A]", "text-xl")}>{helperText}</div>
