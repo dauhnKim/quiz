@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @layer components {
-  /* .card-bg {
-    @apply bg-[#fafafa] dark:bg-[#212121];
-  } */
+  .text-color {
+    @apply dark:text-[#00c896] text-[#00a37a]
+  }
 
 }
 

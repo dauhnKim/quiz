@@ -65,19 +65,19 @@ const QuizResult = () => {
         </div>
       </section>
 
-      <section className="pb-16">
-        <AccordionSet title="Check the answers">
-          <div className="grid grid-cols-1 gap-y-6">
+      <section className="">
+        <AccordionSet title="Check what you got wrong">
+          <div className="grid grid-cols-1 gap-y-16">
             {quizzes.map((quiz, idx) => {
               const { userAnswer, answers } = userAnswers.answerInfo[idx];
               return (
                 quiz.correct_answer !== userAnswer && (
-                  <>
-                    <QuizSet currentQuiz={idx} quizzes={quizzes} answers={answers} userAnswer={userAnswer} className="!pt-0" />
-                    <div className="w-full text-right font-extralight">
-                      Correct Answer : <b className="text-[#00c896]">{quiz.correct_answer}</b>
+                  <div>
+                    <QuizSet currentQuiz={idx} quizzes={quizzes} answers={answers} userAnswer={userAnswer} className="!py-6" />
+                    <div className="w-full text-right font-extralight ">
+                      Correct Answer : <b className="text-color">{quiz.correct_answer}</b>
                     </div>
-                  </>
+                  </div>
                 )
               );
             })}
