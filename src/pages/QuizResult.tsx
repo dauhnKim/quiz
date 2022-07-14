@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 
 import { ChartType } from "../utils/metrics";
 import { quizzesAtom, userAnswersAtom } from "../utils/store";
@@ -16,9 +16,29 @@ const QuizResult = () => {
 
   const [chartData, setChartData] = useState<Array<ChartType>>([]);
 
-  const quizzes = useAtomValue(quizzesAtom);
+  const [quizzes, setQuizzes] = useAtom(quizzesAtom);
+  const [userAnswers, setUserAnswers] = useAtom(userAnswersAtom);
 
-  const userAnswers = useAtomValue(userAnswersAtom);
+  useEffect(() => {
+    if (quizzes.length > 0) {
+      // 정상적으로 진입
+      localStorage.setItem("quizzes", JSON.stringify(quizzes));
+      localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+    } else {
+      // 새로고침 후, 진입
+      const LocalQuizzes = JSON.parse(localStorage.getItem("quizzes"));
+      const LocalUserAnswers = JSON.parse(localStorage.getItem("userAnswers"));
+
+      setQuizzes(LocalQuizzes);
+      setUserAnswers(LocalUserAnswers);
+    }
+
+    window.history.pushState(null, "", document.URL);
+    window.addEventListener("popstate", () => navigate("/"));
+    return () => {
+      window.removeEventListener("popstate", () => {});
+    };
+  }, []);
 
   useEffect(() => {
     let tempChartData = [
@@ -27,17 +47,11 @@ const QuizResult = () => {
     ];
 
     userAnswers.answerInfo.map((answer, i) => {
-      answer.isCorrect ? tempChartData[0].value++ : tempChartData[1].value++;
+      return answer.isCorrect ? tempChartData[0].value++ : tempChartData[1].value++;
     });
 
     setChartData(tempChartData);
-
-    window.history.pushState(null, "", document.URL);
-    window.addEventListener("popstate", () => navigate("/"));
-    return () => {
-      window.removeEventListener("popstate", () => {});
-    };
-  }, []);
+  }, [userAnswers]);
 
   return (
     <div className="w-full h-full">
@@ -65,7 +79,7 @@ const QuizResult = () => {
         </div>
       </section>
 
-      <section className="">
+      <section className="pb-20">
         <AccordionSet title="Check what you got wrong">
           <div className="grid grid-cols-1 gap-y-16">
             {quizzes.map((quiz, idx) => {

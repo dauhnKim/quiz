@@ -50,7 +50,7 @@ const MainQuiz = () => {
 
       if (quizzes.length > 0) return;
 
-      const { data } = await axios.get("https://opentdb.com/api.php?amount=5&category=27&type=multiple");
+      const { data } = await axios.get("https://opentdb.com/api.php?amount=2&category=27&type=multiple");
 
       // Shuffle answers
       let tempAnswers: Array<AnswerType> = [];
