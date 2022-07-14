@@ -1,8 +1,9 @@
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useAtomValue } from "jotai";
-import { themeAtom } from "../utils/store";
-import { AnswerType, QuizType } from "../utils/metrics";
+import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+
 import { cls } from "../utils/libs";
+import { QuizType } from "../utils/metrics";
+import { themeAtom } from "../utils/store";
 
 interface Props {
   currentQuiz: number;

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { useSetAtom } from "jotai";
-import { answersAtom, isTimeRunningAtom, quizzesAtom } from "../utils/store";
+import { answersAtom, quizzesAtom } from "../utils/store";
 
 import { PrimaryButton } from "../components/Button/Primary";
 

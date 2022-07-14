@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 
 import { ChartType } from "../utils/metrics";
 import { quizzesAtom, userAnswersAtom } from "../utils/store";
@@ -46,7 +46,7 @@ const QuizResult = () => {
       { name: "Incorrect", value: 0 },
     ];
 
-    userAnswers.answerInfo.map((answer, i) => {
+    userAnswers.answerInfo.map((answer) => {
       return answer.isCorrect ? tempChartData[0].value++ : tempChartData[1].value++;
     });
 

@@ -9,7 +9,6 @@ const StopWatch = () => {
   const setUserAnswers = useSetAtom(userAnswersAtom);
 
   useEffect(() => {
-    console.log("isRunning :>> ", isRunning);
     let interval: string | number | NodeJS.Timer | undefined;
     if (isRunning) {
       interval = setInterval(() => {
