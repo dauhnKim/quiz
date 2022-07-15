@@ -15,7 +15,7 @@ const StartQuiz = () => {
   };
 
   return (
-    <div className="flex items-center justify-center flex-col h-screen">
+    <div className="flex items-center justify-center flex-col h-full">
       <h1 className="text-6xl">Quiz</h1>
       <p className="py-10 text-[#737373] text-center">You will be presented with 10 questions. Follow the instructions on each page. Your results will be calculated at the end.</p>
       <Link to="/main-quiz">

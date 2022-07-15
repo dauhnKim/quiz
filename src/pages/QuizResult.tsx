@@ -20,8 +20,8 @@ const QuizResult = () => {
   const [quizzes, setQuizzes] = useAtom(quizzesAtom);
   const [userAnswers, setUserAnswers] = useAtom(userAnswersAtom);
 
-  const [localQuizzes, setLocalQuizzes] = useLocalStorage<string | null>("quizzes", null);
-  const [localUserAnswers, setLocalUserAnswers] = useLocalStorage<string | null>("userAnswers", null);
+  const [localQuizzes, setLocalQuizzes] = useLocalStorage<string>("quizzes", "");
+  const [localUserAnswers, setLocalUserAnswers] = useLocalStorage<string>("userAnswers", "");
 
   useEffect(() => {
     if (quizzes.length > 0) {
@@ -30,8 +30,8 @@ const QuizResult = () => {
       setLocalUserAnswers(JSON.stringify(userAnswers));
     } else {
       // 새로고침 후, 진입
-      setQuizzes(JSON.parse(localQuizzes));
-      setUserAnswers(JSON.parse(localUserAnswers));
+      setQuizzes(JSON.parse(localQuizzes) || "");
+      setUserAnswers(JSON.parse(localUserAnswers) || "");
     }
 
     window.history.pushState(null, "", document.URL);

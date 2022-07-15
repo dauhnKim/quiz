@@ -26,7 +26,7 @@ const MainQuiz = () => {
   const [answers, setAnswers] = useAtom(answersAtom);
   const [userAnswers, setUserAnswers] = useAtom(userAnswersAtom);
 
-  let amount = 10;
+  let amount = 2;
   const isCorrect = value === quizzes[currentQuiz]?.correct_answer || false;
   useEffect(() => {
     getQuiz();
