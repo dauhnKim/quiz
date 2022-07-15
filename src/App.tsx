@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./App.css";
 
-import ThemeProvider from "./ThemeProvider";
-
-import Layout from "./components/Layout";
 import MainQuiz from "./pages/MainQuiz";
 import StartQuiz from "./pages/StartQuiz";
 import QuizResult from "./pages/QuizResult";
+
+import Layout from "./components/Layout";
+import ThemeProvider from "./components/ThemeProvider";
+
+import "./App.css";
 
 function App() {
   return (

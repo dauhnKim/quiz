@@ -2,8 +2,8 @@ import React from "react";
 import { Button } from "@mui/material";
 import { useAtomValue } from "jotai";
 
-import { themeAtom } from "../../utils/store";
-import { PrimaryProps } from "../../utils/metrics";
+import { themeAtom } from "../utils/store";
+import { PrimaryProps } from "../utils/metrics";
 
 const Primary: React.FC<PrimaryProps> = ({ text, className, type, onClick }) => {
   const theme = useAtomValue(themeAtom);

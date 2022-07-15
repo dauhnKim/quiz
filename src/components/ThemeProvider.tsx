@@ -1,6 +1,6 @@
 import React from "react";
 import { useAtomValue } from "jotai";
-import { themeAtom } from "./utils/store";
+import { themeAtom } from "../utils/store";
 
 interface Props {
   children: React.ReactNode;

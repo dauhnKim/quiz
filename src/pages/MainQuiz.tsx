@@ -1,6 +1,6 @@
-import { TailSpin } from "react-loader-spinner";
-import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { TailSpin } from "react-loader-spinner";
 
 import axios from "axios";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -10,7 +10,7 @@ import { AnswerType } from "../utils/metrics";
 import { answersAtom, isTimeRunningAtom, quizzesAtom, themeAtom, userAnswersAtom } from "../utils/store";
 
 import QuizSet from "../components/QuizSet";
-import { PrimaryButton } from "../components/Button/Primary";
+import { PrimaryButton } from "../components/Primary";
 
 const MainQuiz = () => {
   const navigate = useNavigate();
@@ -26,6 +26,7 @@ const MainQuiz = () => {
   const [answers, setAnswers] = useAtom(answersAtom);
   const [userAnswers, setUserAnswers] = useAtom(userAnswersAtom);
 
+  let amount = 10;
   const isCorrect = value === quizzes[currentQuiz]?.correct_answer || false;
   useEffect(() => {
     getQuiz();
@@ -50,7 +51,7 @@ const MainQuiz = () => {
 
       if (quizzes.length > 0) return;
 
-      const { data } = await axios.get("https://opentdb.com/api.php?amount=2&category=27&type=multiple");
+      const { data } = await axios.get(`https://opentdb.com/api.php?amount=${amount}&category=27&type=multiple`);
 
       // Shuffle answers
       let tempAnswers: Array<AnswerType> = [];
@@ -117,7 +118,6 @@ const MainQuiz = () => {
 
           <div className="w-full flex justify-between items-center">
             <div className={cls(theme === "dark" && isCorrect ? "text-[#00c896]" : isCorrect ? "text-[#00a37a]" : "text-[#E85B2A]", "text-xl")}>{helperText}</div>
-
             <PrimaryButton text={currentQuiz + 1 === quizzes.length ? "Finish" : "Next"} onClick={onNextClick} className={cls(value !== "" ? "opacity-100" : "opacity-0 pointer-events-none")} />
           </div>
         </form>

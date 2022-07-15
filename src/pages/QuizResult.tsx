@@ -9,7 +9,7 @@ import { quizzesAtom, userAnswersAtom } from "../utils/store";
 import QuizSet from "../components/QuizSet";
 import PieChart from "../components/PieChart";
 import AccordionSet from "../components/AccordionSet";
-import { PrimaryButton } from "../components/Button/Primary";
+import { PrimaryButton } from "../components/Primary";
 
 const QuizResult = () => {
   const navigate = useNavigate();
@@ -26,8 +26,8 @@ const QuizResult = () => {
       localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
     } else {
       // 새로고침 후, 진입
-      const LocalQuizzes = JSON.parse(localStorage.getItem("quizzes"));
-      const LocalUserAnswers = JSON.parse(localStorage.getItem("userAnswers"));
+      const LocalQuizzes = JSON.parse(localStorage.getItem("quizzes")) || null;
+      const LocalUserAnswers = JSON.parse(localStorage.getItem("userAnswers")) || null;
 
       setQuizzes(LocalQuizzes);
       setUserAnswers(LocalUserAnswers);
@@ -86,7 +86,7 @@ const QuizResult = () => {
               const { userAnswer, answers } = userAnswers.answerInfo[idx];
               return (
                 quiz.correct_answer !== userAnswer && (
-                  <div>
+                  <div key={quiz.correct_answer}>
                     <QuizSet currentQuiz={idx} quizzes={quizzes} answers={answers} userAnswer={userAnswer} className="!py-6" />
                     <div className="w-full text-right font-extralight ">
                       Correct Answer : <b className="text-color">{quiz.correct_answer}</b>

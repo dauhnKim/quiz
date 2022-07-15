@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSetAtom } from "jotai";
 import { answersAtom, quizzesAtom } from "../utils/store";
 
-import { PrimaryButton } from "../components/Button/Primary";
+import { PrimaryButton } from "../components/Primary";
 
 const StartQuiz = () => {
   const setQuizzes = useSetAtom(quizzesAtom);
