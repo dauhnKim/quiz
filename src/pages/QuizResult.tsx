@@ -10,6 +10,7 @@ import QuizSet from "../components/QuizSet";
 import PieChart from "../components/PieChart";
 import AccordionSet from "../components/AccordionSet";
 import { PrimaryButton } from "../components/Primary";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const QuizResult = () => {
   const navigate = useNavigate();
@@ -19,18 +20,18 @@ const QuizResult = () => {
   const [quizzes, setQuizzes] = useAtom(quizzesAtom);
   const [userAnswers, setUserAnswers] = useAtom(userAnswersAtom);
 
+  const [localQuizzes, setLocalQuizzes] = useLocalStorage<string | null>("quizzes", null);
+  const [localUserAnswers, setLocalUserAnswers] = useLocalStorage<string | null>("userAnswers", null);
+
   useEffect(() => {
     if (quizzes.length > 0) {
       // 정상적으로 진입
-      localStorage.setItem("quizzes", JSON.stringify(quizzes));
-      localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      setLocalQuizzes(JSON.stringify(quizzes));
+      setLocalUserAnswers(JSON.stringify(userAnswers));
     } else {
       // 새로고침 후, 진입
-      const LocalQuizzes = JSON.parse(localStorage.getItem("quizzes")) || null;
-      const LocalUserAnswers = JSON.parse(localStorage.getItem("userAnswers")) || null;
-
-      setQuizzes(LocalQuizzes);
-      setUserAnswers(LocalUserAnswers);
+      setQuizzes(JSON.parse(localQuizzes));
+      setUserAnswers(JSON.parse(localUserAnswers));
     }
 
     window.history.pushState(null, "", document.URL);
@@ -55,7 +56,7 @@ const QuizResult = () => {
 
   return (
     <div className="w-full h-full">
-      <section className="h-screen flex items-center justify-center flex-col">
+      <section className="py-[15vh] flex items-center justify-center flex-col">
         <div className="w-full flex flex-col items-center space-y-4">
           <h1 className="text-3xl font-bold">Result</h1>
           <h1 className="text-sm">
