@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "@mui/material";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
 import { cls } from "../utils/libs";
-import { answersAtom, quizAmountAtom, quizzesAtom, themeAtom } from "../utils/store";
+import { answersAtom, isTimeRunningAtom, quizAmountAtom, quizzesAtom, themeAtom } from "../utils/store";
 
 import NumberField from "../components/NumberField";
 import { PrimaryButton } from "../components/Primary";
@@ -18,6 +18,11 @@ const StartQuiz = () => {
   const [amount, setAmount] = useAtom(quizAmountAtom);
   const setQuizzes = useSetAtom(quizzesAtom);
   const setAnswers = useSetAtom(answersAtom);
+  const setIsRunning = useSetAtom(isTimeRunningAtom);
+
+  useEffect(() => {
+    setIsRunning(false);
+  }, []);
 
   const onStartClick = () => {
     setQuizzes([]);
