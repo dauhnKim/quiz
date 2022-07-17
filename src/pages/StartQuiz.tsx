@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "@mui/material";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -11,6 +11,7 @@ import NumberField from "../components/NumberField";
 import { PrimaryButton } from "../components/Primary";
 
 const StartQuiz = () => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
 
   const theme = useAtomValue(themeAtom);
@@ -23,8 +24,15 @@ const StartQuiz = () => {
     setAnswers([]);
   };
 
-  const onChange = (event) => {
+  const onChange = (event: { target: { value: number | ((prev: number) => number) } }) => {
     setAmount(event.target.value);
+  };
+
+  const onKeyPress = (ev: { key: string; preventDefault: () => void }) => {
+    if (ev.key === "Enter" && +amount !== 0) {
+      ev.preventDefault();
+      navigate("/main-quiz");
+    }
   };
 
   return (
@@ -41,7 +49,7 @@ const StartQuiz = () => {
         </h2>
 
         <div className={cls(show ? "h-[94px] py-4" : "h-0", "w-full duration-500 transition-all flex justify-center")}>
-          <NumberField theme={theme} amount={amount} onChange={onChange} />
+          <NumberField theme={theme} amount={amount} onChange={onChange} onKeyPress={onKeyPress} />
         </div>
       </section>
 
