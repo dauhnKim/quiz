@@ -28,4 +28,5 @@ export interface PrimaryProps {
   className?: string;
   type?: "submit" | "button" | undefined;
   onClick: () => void;
+  [key: string]: any;
 }

@@ -5,7 +5,7 @@ import { useAtomValue } from "jotai";
 import { themeAtom } from "../utils/store";
 import { PrimaryProps } from "../utils/metrics";
 
-const Primary: React.FC<PrimaryProps> = ({ text, className, type, onClick }) => {
+const Primary: React.FC<PrimaryProps> = ({ text, className, type, onClick, ...rest }) => {
   const theme = useAtomValue(themeAtom);
   return (
     <Button
@@ -36,6 +36,7 @@ const Primary: React.FC<PrimaryProps> = ({ text, className, type, onClick }) => 
       onClick={onClick}
       type={type}
       className={className}
+      {...rest}
     >
       {text}
     </Button>

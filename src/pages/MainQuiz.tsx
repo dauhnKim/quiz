@@ -7,7 +7,7 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
 import { cls } from "../utils/libs";
 import { AnswerType } from "../utils/metrics";
-import { answersAtom, isTimeRunningAtom, quizzesAtom, themeAtom, userAnswersAtom } from "../utils/store";
+import { answersAtom, isTimeRunningAtom, quizAmountAtom, quizzesAtom, themeAtom, userAnswersAtom } from "../utils/store";
 
 import QuizSet from "../components/QuizSet";
 import { PrimaryButton } from "../components/Primary";
@@ -20,13 +20,13 @@ const MainQuiz = () => {
   const [value, setValue] = useState<string>("");
   const [helperText, setHelperText] = useState<string>("");
 
-  const theme = useAtomValue<string>(themeAtom);
+  const theme = useAtomValue(themeAtom);
+  const amount = useAtomValue(quizAmountAtom);
   const setIsRunning = useSetAtom(isTimeRunningAtom);
   const [quizzes, setQuizzes] = useAtom(quizzesAtom);
   const [answers, setAnswers] = useAtom(answersAtom);
   const [userAnswers, setUserAnswers] = useAtom(userAnswersAtom);
 
-  let amount = 2;
   const isCorrect = value === quizzes[currentQuiz]?.correct_answer || false;
   useEffect(() => {
     getQuiz();
@@ -109,7 +109,7 @@ const MainQuiz = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-full">
       {isLoading ? (
         <TailSpin height={25} width={25} color={theme === "dark" ? "#f0f0f0" : "#000"} />
       ) : (
