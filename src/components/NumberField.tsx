@@ -2,8 +2,8 @@ import { TextField } from "@mui/material";
 import React from "react";
 
 interface FieldProps {
-  amount: number;
-  theme: string;
+  amount?: number;
+  theme?: string;
   [key: string]: any;
 }
 
@@ -31,7 +31,19 @@ const NumberField: React.FC<FieldProps> = ({ amount, theme, ...rest }) => {
     },
   };
 
-  return <TextField size="small" sx={textFiledStyle} label="number" type={"number"} value={amount} error={+amount === 0} helperText={+amount === 0 && "Enter a number greather than 0."} {...rest} />;
+  return (
+    <TextField
+      data-testid="number-field"
+      size="small"
+      sx={textFiledStyle}
+      label="number"
+      type={"number"}
+      value={amount}
+      error={+amount === 0}
+      helperText={+amount === 0 && "Enter a number greather than 0."}
+      {...rest}
+    />
+  );
 };
 
 export default NumberField;
