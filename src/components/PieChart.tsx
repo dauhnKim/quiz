@@ -32,7 +32,7 @@ const PieChart: React.FC<Props> = ({ data, total }) => {
         <span className="font-extralight ">
           {data[0].value} / {total}
         </span>
-        <p className="text-xl">{((+data[0].value / total) * 100).toFixed()} %</p>
+        <p className="text-xl">{total ? ((+data[0].value / total) * 100).toFixed() : 0} %</p>
       </div>
     </div>
   );

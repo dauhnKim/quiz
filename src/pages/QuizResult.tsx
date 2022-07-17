@@ -30,8 +30,8 @@ const QuizResult = () => {
       setLocalUserAnswers(JSON.stringify(userAnswers));
     } else {
       // 새로고침 후, 진입
-      setQuizzes(JSON.parse(localQuizzes) || "");
-      setUserAnswers(JSON.parse(localUserAnswers) || "");
+      setQuizzes(localQuizzes ? JSON.parse(localQuizzes) : []);
+      setUserAnswers(localUserAnswers ? JSON.parse(localUserAnswers) : { totalTime: "", answerInfo: [] });
     }
 
     window.history.pushState(null, "", document.URL);

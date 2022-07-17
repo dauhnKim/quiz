@@ -7,7 +7,7 @@ afterEach(() => {
   cleanup();
 });
 
-test("test start quiz component", async () => {
+test("should start quiz component", async () => {
   render(<StartQuiz />, { wrapper: BrowserRouter });
 
   const descriptionText = screen.getByText(/You will be presented with/i);
